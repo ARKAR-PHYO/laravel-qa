@@ -66,7 +66,14 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        return view('questions.edit', compact('question'));
+        /** Using Gate function to protect form, if user not allow, 
+        * user will get 403 access denine error.
+        * That Gate function comes from App\Providers\AuthServiceProvider.php
+        */
+        if (\Gate::denies('update-question', $question)) {
+            abort(403, "Access Denine");
+        }
+        return view('questions.edit', compact('question'));            
     }
 
     /**
@@ -90,6 +97,14 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        /** Using Gate function to protect form, if user not allow, 
+        * user will get 403 access denine error.
+        * That Gate function comes from App\Providers\AuthServiceProvider.php
+        */
+        if (\Gate::denies('delete-question', $question)) {
+            abort(403, "Access Denine");
+        }
+
         $question->delete();
 
         return redirect('/questions')->with('success', "Your Question has been deleted");
