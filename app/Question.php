@@ -33,7 +33,7 @@ class Question extends Model
 
     public function getStatusAttribute()
     {
-        if ($this->answers > 0) {
+        if ($this->answers_count > 0) {
             if ($this->best_answewr_id) {
                 return "answered-accepted";
             }
@@ -46,5 +46,11 @@ class Question extends Model
     {
         $markdown = new CommonMarkConverter(['allow_unsafe_links' => false]);
         return $markdown->convertToHtml($this->body);
+    }
+
+    // Answer Model
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
     }
 }
