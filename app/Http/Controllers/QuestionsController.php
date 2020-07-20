@@ -13,6 +13,11 @@ class QuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // public function __construct()
+    //  {
+    //      $this->middleware('auth');
+    //  }
     public function index()
     {
         return view('questions.index', ['questions' =>Question::latest()->paginate(5)]);
@@ -49,7 +54,8 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        $question->increment('views');
+        return view('questions.show', compact('question'));
     }
 
     /**
