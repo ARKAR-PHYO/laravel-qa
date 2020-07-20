@@ -19,7 +19,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="question-title">{{ __('Question Title') }}</label>
-                            <input type="text" name="title" id="question-title" class="form-control @error('title') is-invalid @enderror">
+                            <input type="text" name="title" id="question-title" class="form-control @error('title') is-invalid @enderror" value="{{ old('title') }}">
                             @error('title')
                                 <div class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label for="question-body">{{ __('Explain Your Question') }}</label>
-                            <textarea name="body" id="question-body" rows="10" class="form-control @error('body') is-invalid @enderror"></textarea>
+                            <textarea name="body" id="question-body" rows="10" class="form-control @error('body') is-invalid @enderror">{{ old('body') }}</textarea>
                             @error('body')
                                 <div class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
