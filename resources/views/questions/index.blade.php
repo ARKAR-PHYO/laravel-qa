@@ -34,19 +34,31 @@
                             <div class="d-flex align-items-center">
                                 <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                 <div class="ml-auto">
-                                    @if (Auth::user()->can('update-question', $question))
-                                    <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">{{ __('Edit') }}</a>                                            
-                                    @endif
+                                    {{-- @if (Auth::user()->can('update-question', $question)) --}}
+                                    {{-- <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">{{ __('Edit') }}</a> --}}
+                                    {{-- @endif --}}
                                     {{-- using Gate Authorization mehtod to protect user to edit and delete question. --}}
                                     
-                                    @if (Auth::user()->can('delete-question', $question))
-                                    <form class="form-delete" action="{{ route('questions.destroy', $question->id) }}" method="post">
+                                    {{-- @if (Auth::user()->can('delete-question', $question)) --}}
+                                    {{-- <form class="form-delete" action="{{ route('questions.destroy', $question->id) }}" method="post">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are You Sure?')">{{ __('Del') }}</button>
-                                    </form>
-                                    @endif
+                                    </form> --}}
+                                    {{-- @endif --}}
                                     {{-- using Gate Authorization mehtod to protect user to edit and delete question. --}}
+
+                                    @can ('update', $question)
+                                    <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">{{ __('Edit') }}</a>
+                                    @endcan
+
+                                    @can ('delete', $question)
+                                    <form class="form-delete" action="{{ route('questions.destroy', $question->id) }}" method="post">
+                                    @method('DELETE')
+                                        @csrf
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are You Sure?')">{{ __('Del') }}</button>
+                                    </form>
+                                    @endcan
                                 </div>
                             </div>
                             <p class="lead">
