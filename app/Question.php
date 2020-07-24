@@ -68,7 +68,7 @@ class Question extends Model
     // Answer Model
     public function answers()
     {
-        return $this->hasMany(Answer::class);
+        return $this->hasMany(Answer::class)->orderBy('votes_count', 'DESC');
     }
 
     public function acceptBestAnswer(Answer $answer)
@@ -76,7 +76,7 @@ class Question extends Model
         $this->best_answer_id = $answer->id;
         $this->save();
     }
-
+    
     public function favorites()
     {
         return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
