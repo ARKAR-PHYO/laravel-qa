@@ -24,7 +24,7 @@ class Answer extends Model
     public function getBodyHtmlAttribute()
     {
         $markdown = new CommonMarkConverter(['allow_unsafe_links' => false]);
-        return $markdown->convertToHtml($this->body);
+        return clean($markdown->convertToHtml($this->body));
     }
 
     public  static function boot()
