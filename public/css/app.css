@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap);@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
 /*!
  * Bootstrap v4.5.0 (https://getbootstrap.com/)
@@ -10928,10 +10928,6 @@ a.text-dark:focus {
   }
 }
 
-.container {
-  font-family: "Raleway", sans-serif;
-}
-
 .counters {
   margin-right: 30px;
   font-size: 10px;
@@ -11008,5 +11004,13 @@ form.form-delete {
 
 .vote-controls a.vote-accepted {
   color: #38c172;
+}
+
+.post {
+  padding: 20px;
+}
+
+.post:not(:last-child) {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
