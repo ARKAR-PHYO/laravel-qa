@@ -12,7 +12,7 @@ class Question extends Model
 
     protected $fillable = ['title', 'body'];
 
-    protected $appends = ['created_date'];
+    protected $appends = ['created_date', 'is_favorited', 'favorites_count'];
 
     public function user()
     {
@@ -78,7 +78,7 @@ class Question extends Model
         $this->best_answer_id = $answer->id;
         $this->save();
     }
-    
+
     public function favorites()
     {
         return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
@@ -99,7 +99,7 @@ class Question extends Model
         return $this->favorites->count();
     }
 
-    
 
-    
+
+
 }
