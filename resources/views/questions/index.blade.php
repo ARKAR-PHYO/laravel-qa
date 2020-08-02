@@ -8,6 +8,8 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h2>{{ __('All Questions') }}</h2>
+                        <p>{{ __('kutch.madaline@example.net') }}</p>
+                        
                         <div class="ml-auto">
                             <a href="{{ route('questions.create') }}" class="btn btn-outline-secondary">{{ __('Ask Question') }}</a>
                         </div>
