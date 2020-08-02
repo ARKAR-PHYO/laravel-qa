@@ -17,7 +17,7 @@ class AnswersController extends Controller
      */
     public function store(Question $question, Request $request)
     {
-        
+
         $question->answers()->create($request->validate([
             'body' => 'required'
         ]) + ['user_id' => \Auth::id()]);
@@ -50,7 +50,7 @@ class AnswersController extends Controller
         $answer->update($request->validate([
             'body' => 'required',
         ]));
-        
+
         if($request->expectsJson()){
             return response()->json([
                 'message' => 'Your Answer has been submitted !',
@@ -72,6 +72,13 @@ class AnswersController extends Controller
         $this->authorize('delete', $answer);
 
         $answer->delete();
+
+        if (request()->expectsJson()) {
+            return response()->json([
+                'message' => "Your answer has been removed",
+            ]);
+        }
+
         return back()->with('success', "Your answer has been removed");
     }
 }
