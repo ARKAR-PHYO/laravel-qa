@@ -1,25 +1,29 @@
 <template>
-     <div class="row mt-5" v-cloak v-if="count">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="card-title">
-                        <h2>{{ title }}</h2>
-                    </div>
-                    <hr>
+    <div>
+        <div class="row mt-5" v-cloak v-if="count">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h2>{{ title }}</h2>
+                        </div>
+                        <hr>
 
-                    <answer @deleted="remove(index)" v-for="(answer, index) in answers" :answer="answer" :key="answer.id"></answer>
-                    <div class="text-center mt-3" v-if="nextUrl">
-                        <button @click.prevent="fetch(nextUrl)" class="btn btn-outline-secondary">Load more answers</button>
+                        <answer @deleted="remove(index)" v-for="(answer, index) in answers" :answer="answer" :key="answer.id"></answer>
+                        <div class="text-center mt-3" v-if="nextUrl">
+                            <button @click.prevent="fetch(nextUrl)" class="btn btn-outline-secondary">Load more answers</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <new-answer @created="add" :question-id="question.id"></new-answer>
     </div>
 </template>
 
 <script>
 import Answer from './Answer.vue';
+import NewAnswer from './NewAnswer.vue';
 
 export default {
     props: ['question'],
@@ -49,7 +53,12 @@ export default {
                 this.answers.push(...data.data);
                 this.nextUrl = data.next_page_url;
             })
-        }
+        },
+
+        add(answer) {
+            this.answers.push(answer);
+            this.count++;
+        },
     },
 
     computed: {
@@ -58,6 +67,6 @@ export default {
         }
     },
 
-    components: { Answer }
+    components: { Answer, NewAnswer }
 }
 </script>
