@@ -32,15 +32,17 @@
 <script>
 import Vote from './Vote.vue';
 import UserInfo from './UserInfo.vue';
+import modification from '../mixins/modification';
 
 export default {
     props: ['answer'],
+
+    mixins: [modification],
 
     components: { Vote, UserInfo },
 
     data() {
         return {
-            editing: false,
             body: this.answer.body,
             bodyHtml: this.answer.body_html,
             id: this.answer.id,
@@ -49,59 +51,26 @@ export default {
         }
     },
     methods: {
-        edit(){
+        setEditCache(){
             this.beforeEditCache = this.body;
-            this.editing = true;
         },
 
-        cancel() {
+        restoreFromCache() {
             this.body = this.beforeEditCache;
-            this.editing = false;
         },
 
-       update () {
-            axios.patch(this.endpoint, {
+       payload() {
+           return  {
                 body: this.body
-            })
-            .then(res=> {
-                this.editing = false;
-                this.bodyHtml = res.data.body_html;
-                this.$toast.success(res.data.message, "Success", { timeout: 9000 });
-            })
-            .catch(err => {
-                this.$toast.error(err.response.data.message, 'error', { timeout: 3000 });
+            }
+       },
+
+        delete() {
+            axios.delete(this.endpoint)
+            .then(res => {
+                this.$toast.success(res.data.message, "Success", { timeout: 2000 });
+                this.$emit('delete')
             });
-        },
-
-        destroy () {
-            this.$toast.question('Are you sure about that?', "Confirm", {
-            timeout: 20000,
-            close: false,
-            overlay: true,
-            displayMode: 'once',
-            id: 'question',
-            zindex: 999,
-            title: 'Hey',
-            position: 'center',
-            buttons: [
-                ['<button><b>YES</b></button>', (instance, toast) => {
-                        axios.delete(this.endpoint)
-                        .then(res => {
-                            this.$emit('delete')
-                        });
-
-                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-                }, true],
-                ['<button>NO</button>', function (instance, toast) {
-
-                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-
-                }],
-            ],
-
-        });
-
         }
     },
     computed: {
